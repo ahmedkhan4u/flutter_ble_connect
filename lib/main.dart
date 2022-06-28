@@ -105,7 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // do something with scan results
       for (ScanResult r in results) {
         if (r.device.name == deviceName) {
-          r.device.connect();
+          setState(() async {
+            var res = await r.device.connect();
+            var connectedDevices = await flutterBlue.connectedDevices;
+            print("Connected Devices => " + connectedDevices.toString());
+          });
 
           return;
         }
@@ -144,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             InkWell(
                               onTap: () {
-                                connectWithDevice(list[index\])
+                                connectWithDevice(list[index]);
                               },
                               splashColor: Colors.lightBlueAccent,
                               child: Container(
